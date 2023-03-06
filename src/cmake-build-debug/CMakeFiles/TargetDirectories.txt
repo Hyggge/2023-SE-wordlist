@@ -1,0 +1,3 @@
+D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/CMakeFiles/wordlist.dir
+D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/CMakeFiles/rebuild_cache.dir
