@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 set(CMAKE_CXX_STANDARD 14)
-project(wordlist)
+project(Wordlist)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/)

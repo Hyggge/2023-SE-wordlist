@@ -5,6 +5,6 @@ include_directories(include)
 
 add_subdirectory ("core")
 
-add_executable (wordlist main.cpp)
+add_executable (Wordlist main.cpp)
 
 # target_link_libraries(Wordlist core)

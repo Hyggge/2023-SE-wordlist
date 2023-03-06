@@ -1,7 +1,0 @@
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/src/CMakeFiles/wordlist.dir
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/src/CMakeFiles/edit_cache.dir
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/src/core/CMakeFiles/edit_cache.dir
-D:/Datum/Term6/Software Enginering/wordlist/cmake-build-debug/src/core/CMakeFiles/rebuild_cache.dir
