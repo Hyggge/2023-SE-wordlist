@@ -7,6 +7,7 @@ include_directories(${INCLUDE_DIR})
 #add_library(core SHARED  Core.cpp) #TODO
 #ADD_EXECUTABLE(Wordlist Core.cpp)
 add_library(core SHARED Core.cpp)
+set_target_properties(core PROPERTIES PREFIX "")
 
 #include(FindOpenMP)
 #if(OPENMP_FOUND)
