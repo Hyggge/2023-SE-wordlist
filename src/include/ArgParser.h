@@ -12,9 +12,9 @@ struct UserOptions {
         w = false;
         c = false;
         r = false;
-        h = ' ';
-        t = ' ';
-        j = ' ';
+        h = '\0';
+        t = '\0';
+        j = '\0';
     }
 };
 

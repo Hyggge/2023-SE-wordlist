@@ -6,7 +6,7 @@ project(core)
 include_directories(${INCLUDE_DIR})
 #add_library(core SHARED  Core.cpp) #TODO
 #ADD_EXECUTABLE(Wordlist Core.cpp)
-add_library(core Core.cpp)
+add_library(core SHARED Core.cpp)
 
 #include(FindOpenMP)
 #if(OPENMP_FOUND)
