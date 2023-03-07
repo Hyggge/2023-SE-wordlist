@@ -56,6 +56,7 @@ ArgParser::ArgParser(int argc, char **argv) {
                     }
                     break;
                 default:
+                    break;
                     // todo: throw exception: no matching option error: "-x" undefined
             }
         } else {

@@ -6,11 +6,11 @@
 
 class FileParser {
 private:
-    char* words[WORDS_MAX_NUM];
-    int wordsNum;
+    char* words[WORDS_MAX_NUM] = {nullptr};
+    int wordsNum = 0;
 
 public:
-    FileParser(std::string filename);
+    explicit FileParser(const std::string &filename);
 
     char** getWords();
 
