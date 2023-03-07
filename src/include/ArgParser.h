@@ -6,6 +6,16 @@
 struct UserOptions {
     bool n, w, c, r;
     char h, t, j;
+
+    UserOptions() {
+        n = false;
+        w = false;
+        c = false;
+        r = false;
+        h = ' ';
+        t = ' ';
+        j = ' ';
+    }
 };
 
 class ArgParser {

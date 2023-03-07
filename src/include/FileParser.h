@@ -2,6 +2,7 @@
 #define WORDLIST_FILEPARSER_H
 
 #include "Constant.h"
+#include <string>
 
 class FileParser {
 private:
@@ -13,7 +14,7 @@ public:
 
     char** getWords();
 
-    int getWordsNum();
+    int getWordsNum() const;
 };
 
 #endif //WORDLIST_FILEPARSER_H

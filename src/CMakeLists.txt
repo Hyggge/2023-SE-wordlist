@@ -8,6 +8,6 @@ add_subdirectory(lib)
 
 add_executable(Wordlist main.cpp)
 
-target_link_libraries(Wordlist core lib)
+target_link_libraries(Wordlist lib)
 
 # target_link_libraries(Wordlist core)
