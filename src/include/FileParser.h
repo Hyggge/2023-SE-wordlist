@@ -12,6 +12,8 @@ private:
 public:
     explicit FileParser(const std::string &filename);
 
+    ~FileParser();
+
     char** getWords();
 
     int getWordsNum() const;

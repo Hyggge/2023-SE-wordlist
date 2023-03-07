@@ -29,7 +29,12 @@ FileParser::FileParser(const std::string &filename) {
         }
         last = ch;
     }
+}
 
+FileParser::~FileParser() {
+    for (char* &word : this->words) {
+        free(word);
+    }
 }
 
 char** FileParser::getWords() {
