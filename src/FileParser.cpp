@@ -2,7 +2,6 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <set>
 #include "Exceptions.h"
 
 FileParser::FileParser(const std::string &filename) {
@@ -15,7 +14,6 @@ FileParser::FileParser(const std::string &filename) {
         throw FileOpenException(filename.c_str());
     }
     std::vector<char> buffer;
-    std::set<std::string> wordSet;
     this->wordsNum = 0;
 
     while (! ifs.eof()) {
@@ -25,16 +23,12 @@ FileParser::FileParser(const std::string &filename) {
         }
         else if (! isalpha(ch) && ! buffer.empty()) {
             int size = (int)buffer.size();
-            std::string word = std::string(buffer.data(), buffer.size());
-            if (wordSet.count(word) == 0) {
-                this->words[this->wordsNum] = (char *) malloc((size + 1) * sizeof(char));
-                for (int i = 0; i < size; ++i) {
-                    this->words[this->wordsNum][i] = buffer[i];
-                }
-                this->words[this->wordsNum][size] = '\0';
-                this->wordsNum++;
-                wordSet.insert(word);
+            this->words[this->wordsNum] = (char *) malloc((size + 1) * sizeof(char));
+            for (int i = 0; i < size; ++i) {
+                this->words[this->wordsNum][i] = buffer[i];
             }
+            this->words[this->wordsNum][size] = '\0';
+            this->wordsNum++;
             buffer.clear();
         }
     }
