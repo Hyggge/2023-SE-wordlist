@@ -15,7 +15,6 @@ Controller::~Controller() {
 }
 
 void Controller::run() {
-    this->result[0] = (char *)malloc(100);
     if (userOptions.n + userOptions.w + userOptions.c == 0) {
         throw MissingFunctionalOptionException();
     } else if (userOptions.n + userOptions.w + userOptions.c > 1 ||
