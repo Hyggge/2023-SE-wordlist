@@ -1,6 +1,7 @@
 #include "ArgParser.h"
 #include <cstring>
 #include <cctype>
+#include "Exceptions.h"
 
 bool checkEndWithDotTxt(char* str) {
     int l = (int) strlen(str);
@@ -36,7 +37,7 @@ ArgParser::ArgParser(int argc, char **argv) {
                         this->userOptions.h = (char) tolower(argv[i + 1][0]);
                         ++i;
                     } else {
-                        // todo: throw exception: -h usage error: "argv[i + 1]"
+                        throw OptionUsageException(str);
                     }
                     break;
                 case 't':
@@ -44,7 +45,7 @@ ArgParser::ArgParser(int argc, char **argv) {
                         this->userOptions.t = (char) tolower(argv[i + 1][0]);
                         ++i;
                     } else {
-                        // todo: throw exception: -t usage error: "argv[i + 1]"
+                        throw OptionUsageException(str);
                     }
                     break;
                 case 'j':
@@ -52,15 +53,16 @@ ArgParser::ArgParser(int argc, char **argv) {
                         this->userOptions.j = (char) tolower(argv[i + 1][0]);
                         ++i;
                     } else {
-                        // todo: throw exception: -j usage error: "argv[i + 1]"
+                        throw OptionUsageException(str);
                     }
                     break;
                 default:
-                    break;
-                    // todo: throw exception: no matching option error: "-x" undefined
+                    throw BadOptionException(str);
             }
+        } else if (str[0] == '-' && strlen(str) != 2) {
+            throw BadOptionException(str);
         } else {
-            // todo: throw exception: argument parsing error: "argv"
+            throw UnknownCommandException(str);
         }
     }
 }

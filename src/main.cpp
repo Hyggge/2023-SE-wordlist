@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
         Controller controller = Controller(userOptions, words, len);
         controller.run();
     } catch (std::exception &e) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "\033[31m" << e.what() << "\033[0m" << std::endl;
         return 1;
     }
     return 0;

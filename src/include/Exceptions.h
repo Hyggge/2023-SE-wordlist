@@ -7,7 +7,7 @@
 class OptionIncompatibilityException : public std::exception {
 public:
     const char *what() const noexcept override {
-        return "Option incompatibility.";
+        return "Option incompatibility";
     }
 };
 
@@ -19,9 +19,18 @@ public:
 };
 
 class OptionUsageException: public std::exception {
+private:
+    char message[100] = {'\0'};
+
 public:
+    explicit OptionUsageException(char* option) {
+        strcpy(message, "Option usage error : ");
+        strcat(message, option);
+        strcat(message, " should be followed by a letter");
+    }
+
     const char *what() const noexcept override {
-        return "-h, -t and -j should be followed by a letter.";
+        return message;
     }
 };
 
@@ -72,7 +81,7 @@ private:
     char message[100] = {'\0'};
 
 public:
-    explicit FileOpenException(char* filename) {
+    explicit FileOpenException(const char* filename) {
         int l = (int) strlen(filename);
         strcpy(message, "Cannot open file : ");
         if (l > 50) {
@@ -91,6 +100,12 @@ public:
 class NoResultException: public std::exception {
     const char *what() const noexcept override {
         return "No satisfactory word chain";
+    }
+};
+
+class NoInputFileException: public std::exception {
+    const char *what() const noexcept override {
+        return "Input file should be given";
     }
 };
 

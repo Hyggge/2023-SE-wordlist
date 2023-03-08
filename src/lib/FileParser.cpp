@@ -3,17 +3,20 @@
 #include <fstream>
 #include <vector>
 #include <set>
+#include "Exceptions.h"
 
 FileParser::FileParser(const std::string &filename) {
+    if (filename.empty()) {
+        throw NoInputFileException();
+    }
     std::ifstream ifs;
     ifs.open(filename);
     if (ifs.fail()) {
-        // todo: throw exception
+        throw FileOpenException(filename.c_str());
     }
     std::vector<char> buffer;
     std::set<std::string> wordSet;
     this->wordsNum = 0;
-
 
     while (! ifs.eof()) {
         char ch = (char)ifs.get();
