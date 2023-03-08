@@ -1,0 +1,6 @@
+cmake_minimum_required (VERSION 3.24)
+set(CMAKE_CXX_STANDARD 14)
+project(core)
+include_directories(include)
+add_library(core SHARED Core.cpp Solver.cpp Graph.cpp)
+set_target_properties(core PROPERTIES PREFIX "")

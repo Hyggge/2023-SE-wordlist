@@ -1,6 +1,6 @@
-#include <Core.h>
-
+#include "Core.h"
 int gen_chains_all(char* words[], int len, char* result[]) {
+
     return 0;
 }
 
