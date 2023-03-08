@@ -3,6 +3,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(${INCLUDE_DIR})
 add_library(lib ArgParser.cpp FileParser.cpp Controller.cpp)
+set_target_properties(lib PROPERTIES PREFIX "")
+
 target_link_libraries(lib core)
 
 #target_link_libraries(Wordlist core)
