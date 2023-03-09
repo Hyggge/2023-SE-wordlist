@@ -19,7 +19,7 @@ FileParser::FileParser(const std::string &filename) {
     while (! ifs.eof()) {
         char ch = (char)ifs.get();
         if (isalpha(ch)) {
-            buffer.push_back(ch);
+            buffer.push_back((char) tolower(ch));
         }
         else if (! isalpha(ch) && ! buffer.empty()) {
             int size = (int)buffer.size();
