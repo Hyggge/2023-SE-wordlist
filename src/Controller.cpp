@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "Core.h"
 #include "Exceptions.h"
+#include <cstdio>
 
 Controller::Controller(UserOptions userOptions, char* words[], int len) {
    this->userOptions = userOptions;
@@ -21,11 +22,22 @@ void Controller::run() {
         userOptions.n && (userOptions.h + userOptions.t + userOptions.j > 0)) {
         throw OptionIncompatibilityException();
     }
+
+    int resultLen = 0;
     if (userOptions.n) {
-       gen_chains_all(words, len, result);
+        resultLen = gen_chains_all(words, len, result);
+        if (resultLen <= 0) throw NoResultException();
+        printf("%d\n", resultLen);
     } else if (userOptions.w) {
-       gen_chain_word(words, len, result, userOptions.h, userOptions.t, userOptions.j, userOptions.r);
+        resultLen = gen_chain_word(words, len, result, userOptions.h, userOptions.t, userOptions.j, userOptions.r);
+        if (resultLen <= 0) throw NoResultException();
     } else {
-       gen_chain_char(words, len, result, userOptions.h, userOptions.t, userOptions.j, userOptions.r);
+        resultLen = gen_chain_char(words, len, result, userOptions.h, userOptions.t, userOptions.j, userOptions.r);
+        if (resultLen <= 0) throw NoResultException();
     }
+
+    for (int i = 0; i < resultLen; i++) {
+        printf("%s\n", result[i]);
+    }
+
 }
