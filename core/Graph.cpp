@@ -156,7 +156,7 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
             maxPos = cur;
         }
         if (tail != '\0' && cur == tail - 'a') {
-            maxWordNum = dp[cur];
+            maxWordNum = std::max(0, dp[cur]);
             maxPos = cur;
             break;
         }
