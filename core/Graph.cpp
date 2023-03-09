@@ -14,12 +14,13 @@ Graph::Graph(char* words[], int len, char* result[], char except) {
         if (words[i][0] == except) {
             continue;
         }
+        word2Len[i] = (int)strlen(words[i]);
         int from = words[i][0] - 'a';
-        int to = words[i][strlen(words[i]) - 1] - 'a';
+        int to = words[i][word2Len[i] - 1] - 'a';
         if (from == to) {
             selfCircleWordIdList[from].push_back(i);
         } else {
-            addEdge(words[i][0] - 'a', words[i][strlen(words[i]) - 1] - 'a', i);
+            addEdge(words[i][0] - 'a', words[i][word2Len[i] - 1] - 'a', i);
         }
     }
     this->words = words;
@@ -120,7 +121,7 @@ int Graph::genChainWordWithCircle(char head, char tail) {
     }
     for (int i = 0; i < maxChain.size(); ++i) {
         char *word = words[maxChain[i]];
-        result[i] = (char *) malloc((strlen(word) + 1) * sizeof(char));
+        result[i] = (char *) malloc((word2Len[maxChain[i]] + 1) * sizeof(char));
         strcpy(result[i], word);
     }
     resultLen = (int) maxChain.size();
@@ -171,14 +172,14 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
     int cur = maxPos;
     for (int i = maxWordNum - 1; i >= 0; --i) {
         if (! selfCircleWordIdList[cur].empty()) {
-            char *selfCircleWord = words[selfCircleWordIdList[cur][0]];
-            result[i] = (char *) malloc(strlen(selfCircleWord) + 1);
-            strcpy(result[i], selfCircleWord);
+            int wordId = selfCircleWordIdList[cur][0];
+            result[i] = (char *) malloc(word2Len[wordId] + 1);
+            strcpy(result[i], words[wordId]);
             --i;
         }
-        char *word = words[pre[cur].second];
-        result[i] = (char *) malloc(strlen(word) + 1);
-        strcpy(result[i], word);
+        int wordId = pre[cur].second;
+        result[i] = (char *) malloc(word2Len[wordId] + 1);
+        strcpy(result[i], words[wordId]);
     }
 
     resultLen = maxWordNum;
@@ -193,7 +194,7 @@ void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain
         if (! visited[edge.wordId]) {
             visited[edge.wordId] = true;
             curChain.push_back(edge.wordId);
-            dfsChainCharWithCircle(edge.to, tail, curChain, maxChain, visited, curCharNum + (int) strlen(words[edge.wordId]), maxCharNum);
+            dfsChainCharWithCircle(edge.to, tail, curChain, maxChain, visited, curCharNum +  word2Len[edge.wordId], maxCharNum);
             curChain.pop_back();
             visited[edge.wordId] = false;
         }
@@ -215,9 +216,9 @@ int Graph::genChainCharWithCircle(char head, char tail) {
         }
     }
     for (int i = 0; i < maxChain.size(); ++i) {
-        char *word = words[maxChain[i]];
-        result[i] = (char *) malloc((strlen(word) + 1) * sizeof(char));
-        strcpy(result[i], word);
+        int wordId = maxChain[i];
+        result[i] = (char *) malloc((word2Len[wordId] + 1) * sizeof(char));
+        strcpy(result[i], words[wordId]);
     }
     resultLen = (int) maxChain.size();
     return resultLen;
@@ -245,8 +246,8 @@ int Graph::genChainCharWithoutCircle(char head, char tail) {
     // dp according to topology order
     for (int cur : toposortSequence) {
         if (! selfCircleWordIdList[cur].empty()) {
-            char *selfCircleWord = words[selfCircleWordIdList[cur][0]];
-            dp[cur] += (int) strlen(selfCircleWord);
+            int wordId = selfCircleWordIdList[cur][0];
+            dp[cur] += word2Len[wordId];
             wordNum[cur]++;
         }
         if (dp[cur] > maxCharNum) {
@@ -259,10 +260,8 @@ int Graph::genChainCharWithoutCircle(char head, char tail) {
             break;
         }
         for (Edge &e : g[cur]) {
-            char* word = words[e.wordId];
-            int wordLen = (int) strlen(word);
-            if (dp[e.to] < dp[cur] + wordLen) {
-                dp[e.to] = dp[cur] + wordLen;
+            if (dp[e.to] < dp[cur] + word2Len[e.wordId]) {
+                dp[e.to] = dp[cur] + word2Len[e.wordId];
                 wordNum[e.to] = wordNum[cur] + 1;
                 pre[e.to] = {cur, e.wordId};
             }
@@ -273,14 +272,14 @@ int Graph::genChainCharWithoutCircle(char head, char tail) {
     resultLen = wordNum[maxPos];
     for (int i = resultLen - 1; i >= 0; --i) {
         if (! selfCircleWordIdList[cur].empty()) {
-            char *selfCircleWord = words[selfCircleWordIdList[cur][0]];
-            result[i] = (char *) malloc(strlen(selfCircleWord) + 1);
-            strcpy(result[i], selfCircleWord);
+            int wordId = selfCircleWordIdList[cur][0];
+            result[i] = (char *) malloc(word2Len[wordId] + 1);
+            strcpy(result[i], words[wordId]);
             --i;
         }
-        char *word = words[pre[cur].second];
-        result[i] = (char *) malloc(strlen(word) + 1);
-        strcpy(result[i], word);
+        int wordId = pre[cur].second;
+        result[i] = (char *) malloc(word2Len[wordId] + 1);
+        strcpy(result[i], words[wordId]);
     }
 
     return resultLen;

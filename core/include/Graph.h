@@ -12,9 +12,9 @@ private:
     std::vector<Edge> g[26];
     int toposortInDegree[26] = {0};
     int toposortSequence[26] = {0};
-    int previousNode[26] = {0};
 
     char** words;
+    int word2Len[10005];
 
     char** result;
     int resultLen = 0;
