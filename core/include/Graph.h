@@ -20,12 +20,16 @@ private:
     int resultLen = 0;
 
     std::vector<int> wordIdStack;
-
     std::vector<int> selfCircleWordIdList[26];
+
 
     void addEdge(int u, int v, int wordId);
 
     void dfsChainsAll(int cur, bool allowSelfCircle);
+
+    void dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited);
+
+    void dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum);
 
 public:
     Graph(char* words[], int len, char* result[], char except = '\0');

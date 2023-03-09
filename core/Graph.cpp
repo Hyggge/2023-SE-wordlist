@@ -91,48 +91,197 @@ int Graph::genChainsAll() {
     return resultLen;
 }
 
+void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited) {
+    if ((tail == '\0' || tail == cur) && curChain.size() > maxChain.size()) {
+        maxChain = std::vector<int>(curChain);
+    }
+    for (Edge& edge : g[cur]) {
+        if (! visited[edge.wordId]) {
+            visited[edge.wordId] = true;
+            curChain.push_back(edge.wordId);
+            dfsChainWordWithCircle(edge.to, tail, curChain, maxChain, visited);
+            curChain.pop_back();
+            visited[edge.wordId] = false;
+        }
+    }
+}
+
 int Graph::genChainWordWithCircle(char head, char tail) {
-    return 0;
+    std::vector<int> curChain;
+    std::vector<int> maxChain;
+    bool visited[10005] = {false}; // todo
+
+    if (head != '\0') {
+        dfsChainWordWithCircle(head - 'a', tail, curChain, maxChain, visited);
+    } else {
+        for (int i = 0; i < 26; ++i) {
+            dfsChainWordWithCircle(i, tail, curChain, maxChain, visited);
+        }
+    }
+    for (int i = 0; i < maxChain.size(); ++i) {
+        char *word = words[maxChain[i]];
+        result[i] = (char *) malloc((strlen(word) + 1) * sizeof(char));
+        strcpy(result[i], word);
+    }
+    resultLen = (int) maxChain.size();
+    return resultLen;
 }
 
 int Graph::genChainWordWithoutCircle(char head, char tail) {
     int dp[26] = {0};
-    int pre[26] = {0};
-    int maxLen = 0;
+    std::pair<int, int> pre[26]; // first: pre node, second: word id of the edge
+    int maxWordNum = 0;
     int maxPos = -1;
-
-    for (int i = 0; i < 26; ++i) {
-        pre[i] = -1;
+    // init `pre`
+    for (auto & item : pre) {
+        item.first = -1;
+        item.second = -1;
     }
+    // if `head` is not '\0', we should only set dp[head - 'a'] = 0, and other dp[i] = -2147483647
+    // by this means, we can ensure that the first letter of the longest word chain is always `head`
     if (head != '\0') {
         for (int i = 0; i < 26; ++i) {
             dp[i] = -2147483647;
         }
         dp[head - 'a'] = 0;
     }
-
-    for (int i = 0; i < 26; ++i) {
-        int cur = toposortSequence[i];
-        if (selfCircleWordIdList[cur].size() > 0) dp[cur]++;
-        if (dp[cur] > maxLen) {
-            maxLen = dp[cur];
+    // dp according to topology order
+    for (int cur : toposortSequence) {
+        if (! selfCircleWordIdList[cur].empty()) {
+            dp[cur]++;
+        }
+        if (dp[cur] > maxWordNum) {
+            maxWordNum = dp[cur];
             maxPos = cur;
         }
         if (tail != '\0' && cur == tail - 'a') {
-            maxLen = dp[cur];
+            maxWordNum = dp[cur];
             maxPos = cur;
             break;
         }
+        for (Edge &e : g[cur]) {
+            if (dp[e.to] < dp[cur] + 1) {
+                dp[e.to] = dp[cur] + 1;
+                pre[e.to] = {cur, e.wordId};
+            }
+        }
+
+    }
+    // find the specific longest word chain with `maxPos` and `pre`
+    int cur = maxPos;
+    for (int i = maxWordNum - 1; i >= 0; --i) {
+        if (! selfCircleWordIdList[cur].empty()) {
+            char *selfCircleWord = words[selfCircleWordIdList[cur][0]];
+            result[i] = (char *) malloc(strlen(selfCircleWord) + 1);
+            strcpy(result[i], selfCircleWord);
+            --i;
+        }
+        char *word = words[pre[cur].second];
+        result[i] = (char *) malloc(strlen(word) + 1);
+        strcpy(result[i], word);
     }
 
+    resultLen = maxWordNum;
+    return resultLen;
+}
 
-    return ;
+void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum) {
+    if ((tail == '\0' || tail == cur) && curCharNum > maxCharNum) {
+        maxChain = std::vector<int>(curChain);
+    }
+    for (Edge& edge : g[cur]) {
+        if (! visited[edge.wordId]) {
+            visited[edge.wordId] = true;
+            curChain.push_back(edge.wordId);
+            dfsChainCharWithCircle(edge.to, tail, curChain, maxChain, visited, curCharNum + (int) strlen(words[edge.wordId]), maxCharNum);
+            curChain.pop_back();
+            visited[edge.wordId] = false;
+        }
+    }
 }
 
 int Graph::genChainCharWithCircle(char head, char tail) {
-    return 0;
+    std::vector<int> curChain;
+    std::vector<int> maxChain;
+    int curCharNum = 0;
+    int maxCharNum = 0;
+    bool visited[10005] = {false}; // todo
+
+    if (head != '\0') {
+        dfsChainCharWithCircle(head - 'a', tail, curChain, maxChain, visited, curCharNum, maxCharNum);
+    } else {
+        for (int i = 0; i < 26; ++i) {
+            dfsChainCharWithCircle(i, tail, curChain, maxChain, visited, curCharNum, maxCharNum);
+        }
+    }
+    for (int i = 0; i < maxChain.size(); ++i) {
+        char *word = words[maxChain[i]];
+        result[i] = (char *) malloc((strlen(word) + 1) * sizeof(char));
+        strcpy(result[i], word);
+    }
+    resultLen = (int) maxChain.size();
+    return resultLen;
 }
 
 int Graph::genChainCharWithoutCircle(char head, char tail) {
-    return 0;
+    int dp[26] = {0};
+    int wordNum[26] = {0};
+    std::pair<int, int> pre[26]; // first: pre node, second: word id of the edge
+    int maxCharNum = 0;
+    int maxPos = -1;
+    // init `pre`
+    for (auto & item : pre) {
+        item.first = -1;
+        item.second = -1;
+    }
+    // if `head` is not '\0', we should only set dp[head - 'a'] = 0, and other dp[i] = -2147483647
+    // by this means, we can ensure that the first letter of the longest word chain is always `head`
+    if (head != '\0') {
+        for (int i = 0; i < 26; ++i) {
+            dp[i] = -2147483647;
+        }
+        dp[head - 'a'] = 0;
+    }
+    // dp according to topology order
+    for (int cur : toposortSequence) {
+        if (! selfCircleWordIdList[cur].empty()) {
+            char *selfCircleWord = words[selfCircleWordIdList[cur][0]];
+            dp[cur] += (int) strlen(selfCircleWord);
+            wordNum[cur]++;
+        }
+        if (dp[cur] > maxCharNum) {
+            maxCharNum = dp[cur];
+            maxPos = cur;
+        }
+        if (tail != '\0' && cur == tail - 'a') {
+            // maxCharNum = dp[cur];
+            maxPos = cur;
+            break;
+        }
+        for (Edge &e : g[cur]) {
+            char* word = words[e.wordId];
+            int wordLen = (int) strlen(word);
+            if (dp[e.to] < dp[cur] + wordLen) {
+                dp[e.to] = dp[cur] + wordLen;
+                wordNum[e.to] = wordNum[cur] + 1;
+                pre[e.to] = {cur, e.wordId};
+            }
+        }
+    }
+    // find the specific longest word chain with `maxPos` and `pre`
+    int cur = maxPos;
+    resultLen = wordNum[maxPos];
+    for (int i = resultLen - 1; i >= 0; --i) {
+        if (! selfCircleWordIdList[cur].empty()) {
+            char *selfCircleWord = words[selfCircleWordIdList[cur][0]];
+            result[i] = (char *) malloc(strlen(selfCircleWord) + 1);
+            strcpy(result[i], selfCircleWord);
+            --i;
+        }
+        char *word = words[pre[cur].second];
+        result[i] = (char *) malloc(strlen(word) + 1);
+        strcpy(result[i], word);
+    }
+
+    return resultLen;
 }
