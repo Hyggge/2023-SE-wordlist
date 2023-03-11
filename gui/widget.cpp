@@ -154,6 +154,16 @@ void Widget::work() {
             buffer.clear();
         }
     }
+    if (! buffer.empty()) {
+        int len = (int)buffer.size();
+        words[wordsNum] = (char*)malloc((len + 1) * sizeof(char));
+        for (int j = 0; j < len; ++j) {
+            words[wordsNum][j] = buffer[j];
+        }
+        words[wordsNum][len] = '\0';
+        wordsNum++;
+        buffer.clear();
+    }
 
     // 调用Core函数
     char *result[MAX_WORD_LENGTH] = {nullptr};
