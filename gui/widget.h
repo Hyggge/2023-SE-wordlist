@@ -6,6 +6,14 @@
 #include <string>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QRadioButton>
+#include <QFileDialog>
+#include <QComboBox>
+#include <QTextCodec>
+#include <QMessageBox>
+#include <QErrorMessage>
+#include <cstring>
+#include <cstdio>
 #include "Constant.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +28,9 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+private slots:
+    void work();
+
 private:
     Ui::Widget *ui;
     int inputMode = SCREEN_INPUT_MODE;
@@ -28,7 +39,7 @@ private:
     char jOption = '\0';
     char tOption = '\0';
     bool rOption = false;
-    char* selectedFileName = nullptr;
+    char selectedFileName[2000];
     bool lastStatus = false;
 
 };

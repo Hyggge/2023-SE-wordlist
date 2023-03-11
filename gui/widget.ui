@@ -45,6 +45,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="chooseFileButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -158,7 +161,7 @@
   </widget>
   <widget class="QGroupBox" name="additionGroup">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -173,7 +176,7 @@
    </property>
    <widget class="QLineEdit" name="hOptionInput">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -227,7 +230,7 @@
    </widget>
    <widget class="QLineEdit" name="tOptionInput">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -255,7 +258,7 @@
    </widget>
    <widget class="QLineEdit" name="jOptionInput">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -358,7 +361,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="workButton">
+  <widget class="QPushButton" name="startButton">
    <property name="geometry">
     <rect>
      <x>360</x>
