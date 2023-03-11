@@ -14,20 +14,22 @@ if(ANDROID)
   add_library(GUI SHARED
     main.cpp
     widget.cpp
-    widget.h
+    include/widget.h
+    include/Core.h
+    include/Constant.h
     widget.ui
   )
 else()
   add_executable(GUI
     main.cpp
     widget.cpp
-    widget.h
-    Core.h
-    Constant.h
+    include/widget.h
+    include/Core.h
+    include/Constant.h
     widget.ui
   )
 endif()
-
+include_directories(include)
 #target_link_directories(GUI PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(GUI PRIVATE Qt5::Widgets core)
 

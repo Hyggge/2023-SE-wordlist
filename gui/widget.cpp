@@ -34,7 +34,7 @@ Widget::Widget(QWidget *parent)
         ui->hOptionInput->setEnabled(false);
         ui->tOptionInput->setEnabled(false);
         ui->jOptionInput->setEnabled(false);
-        qDebug() << "nOptionRadio clicked";
+        // qDebug() << "nOptionRadio clicked";
     });
     // 绑定wOptionRadio的点击事件
     connect(ui->wOptionRadio, &QRadioButton::clicked, this, [&]() {
@@ -43,7 +43,7 @@ Widget::Widget(QWidget *parent)
         ui->hOptionInput->setEnabled(true);
         ui->tOptionInput->setEnabled(true);
         ui->jOptionInput->setEnabled(true);
-        qDebug() << "wOptionRadio clicked";
+        // qDebug() << "wOptionRadio clicked";
     });
     // 绑定cOptionRadio的点击事件
     connect(ui->cOptionRadio, &QRadioButton::clicked, this, [&]() {
@@ -52,7 +52,7 @@ Widget::Widget(QWidget *parent)
         ui->hOptionInput->setEnabled(true);
         ui->tOptionInput->setEnabled(true);
         ui->jOptionInput->setEnabled(true);
-        qDebug() << "cOptionRadio clicked";
+        // qDebug() << "cOptionRadio clicked";
     });
     // 绑定hOptionInput的输入事件
     connect(ui->hOptionInput, &QLineEdit::textChanged, this, [&](QString text) {
@@ -61,7 +61,7 @@ Widget::Widget(QWidget *parent)
         } else {
             hOption = text.toStdString().c_str()[0];
         }
-        qDebug() << hOption;
+        // qDebug() << hOption;
     });
     // 绑定tOptionInput的输入事件
     connect(ui->tOptionInput, &QLineEdit::textChanged, this, [&](QString text) {
@@ -70,7 +70,7 @@ Widget::Widget(QWidget *parent)
         } else {
             tOption = text.toStdString().c_str()[0];
         }
-        qDebug() << tOption;
+        // qDebug() << tOption;
     });
     // 绑定jOptionInput的输入事件
     connect(ui->jOptionInput, &QLineEdit::textChanged, this, [&](QString text) {
@@ -79,7 +79,7 @@ Widget::Widget(QWidget *parent)
         } else {
             jOption = text.toStdString().c_str()[0];
         }
-        qDebug() << jOption;
+        // qDebug() << jOption;
     });
     // 绑定rOptionInput的选择事件
     connect(ui->rOptionSelect, &QComboBox::currentTextChanged, this, [&](QString text) {
@@ -88,7 +88,7 @@ Widget::Widget(QWidget *parent)
         } else {
             rOption = false;
         }
-        qDebug() << rOption;
+        // qDebug() << rOption;
     });
     // 绑定startButton的点击事件
     connect(ui->startButton, &QPushButton::clicked, this, &Widget::work);
@@ -98,7 +98,7 @@ Widget::Widget(QWidget *parent)
         QTextCodec *code = QTextCodec::codecForName("UTF-8");
         fileName = QString::fromStdString(code->fromUnicode(fileName).data());
         if (fileName != nullptr) {
-            qDebug() << fileName.toStdString().c_str();
+            // qDebug() << fileName.toStdString().c_str();
             FILE* file = fopen(fileName.toStdString().c_str(), "w");
             if (file == nullptr) {
                 QMessageBox::critical(this, "出错啦!", "指定路径的文件无法打开");
@@ -187,7 +187,7 @@ void Widget::work() {
 
     // 显示任务执行的时间
     sprintf_s(totTime, "%.2f", (double)(endTime - startTime) / CLOCKS_PER_SEC);
-    qDebug() << (double)(endTime - startTime) / CLOCKS_PER_SEC;
+    //qDebug() << (double)(endTime - startTime) / CLOCKS_PER_SEC;
     ui->totTimeDisplay->setText(totTime);
 
     // 如果没有找到结果, 则弹出错误提示
