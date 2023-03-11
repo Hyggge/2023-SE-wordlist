@@ -1,6 +1,7 @@
 #ifndef WORDLIST_CONTROLLER_H
 #define WORDLIST_CONTROLLER_H
 
+#include <cstdio>
 #include "ArgParser.h"
 #include "Constant.h"
 
