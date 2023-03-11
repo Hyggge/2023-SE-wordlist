@@ -168,7 +168,10 @@ void Widget::work() {
     // 调用Core函数
     char *result[MAX_WORD_LENGTH] = {nullptr};
     int resultLen = 0;
+    clock_t startTime, endTime;
+    char totTime[10];
     try {
+        startTime = clock();
         if (taskType == N_TASK) {
             resultLen = gen_chains_all(words, wordsNum, result);
         } else if (taskType == W_TASK) {
@@ -176,10 +179,16 @@ void Widget::work() {
         } else if (taskType == C_TASK) {
             resultLen = gen_chain_char(words, wordsNum, result, hOption, tOption, jOption, rOption);
         }
+        endTime = clock();
     } catch (std::exception &e) {
         QMessageBox::critical(this, "出错啦!", "输入文本中隐含环");
         return;
     }
+
+    // 显示任务执行的时间
+    sprintf_s(totTime, "%.2f", (double)(endTime - startTime) / CLOCKS_PER_SEC);
+    qDebug() << (double)(endTime - startTime) / CLOCKS_PER_SEC;
+    ui->totTimeDisplay->setText(totTime);
 
     // 如果没有找到结果, 则弹出错误提示
     if (resultLen <= 0) {

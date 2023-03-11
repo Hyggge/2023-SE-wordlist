@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>613</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -338,18 +338,18 @@
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>50</y>
+     <y>40</y>
      <width>391</width>
-     <height>211</height>
+     <height>221</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="startButton">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>420</x>
      <y>290</y>
-     <width>151</width>
+     <width>111</width>
      <height>31</height>
     </rect>
    </property>
@@ -360,9 +360,9 @@
   <widget class="QPushButton" name="exportButton">
    <property name="geometry">
     <rect>
-     <x>600</x>
+     <x>580</x>
      <y>290</y>
-     <width>151</width>
+     <width>111</width>
      <height>31</height>
     </rect>
    </property>
@@ -377,13 +377,39 @@
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>360</y>
+     <y>350</y>
      <width>391</width>
-     <height>211</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="totTimeLabel">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>580</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>执行时间(s):</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="totTimeDisplay">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>580</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0.00</string>
    </property>
   </widget>
  </widget>

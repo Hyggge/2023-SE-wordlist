@@ -17,6 +17,8 @@
 #include <cstdio>
 #include <vector>
 #include <stdexcept>
+#include <ctime>
+#include <cstdio>
 #include "Constant.h"
 #include "Core.h"
 
