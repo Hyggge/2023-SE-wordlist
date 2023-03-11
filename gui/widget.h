@@ -14,7 +14,10 @@
 #include <QErrorMessage>
 #include <cstring>
 #include <cstdio>
+#include <vector>
+#include <stdexcept>
 #include "Constant.h"
+#include "Core.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }

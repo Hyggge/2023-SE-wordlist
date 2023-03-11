@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(untitled LANGUAGES CXX)
+project(GUI LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -27,14 +27,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
-  add_library(untitled SHARED
+  add_library(GUI SHARED
     main.cpp
     widget.cpp
     widget.h
     widget.ui
   )
 else()
-  add_executable(untitled
+  add_executable(GUI
     main.cpp
     widget.cpp
     widget.h
@@ -42,4 +42,5 @@ else()
   )
 endif()
 
-target_link_libraries(untitled PRIVATE Qt5::Widgets)
+target_link_libraries(GUI PRIVATE Qt5::Widgets core.dll)
+

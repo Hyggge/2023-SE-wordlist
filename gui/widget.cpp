@@ -111,7 +111,86 @@ Widget::Widget(QWidget *parent)
 }
 
 void Widget::work() {
-    // todo:修改lastStatus, 并且设置导出按钮的可用性
+    // 修改lastStatus, 并且设置导出按钮的可用性
+    ui->exportButton->setEnabled(false);
+
+    // 设置buffer, 指向输入文本
+    char * data = nullptr;
+    int size = 0;
+    if (inputMode == FILE_INPUT_MODE) {
+        FILE* file = fopen(selectedFileName, "r");
+        if (file == nullptr) {
+            QMessageBox::critical(this, "出错啦!", "指定路径的文件无法打开");
+            return;
+        }
+        fseek(file, 0, SEEK_END);
+        size = (int)ftell(file);
+        fseek(file, 0, SEEK_SET);
+        data = (char*)malloc(( + 1) * sizeof(char));
+        fread(data, sizeof(char), size, file);
+        fclose(file);
+    } else {
+        size = ui->screenInputBox->toPlainText().size();
+        data = (char*)malloc((size + 1) * sizeof(char));
+        strcpy(data, ui->screenInputBox->toPlainText().toStdString().c_str());
+    }
+
+    // 对输入文本进行解析
+    std::vector<char> buffer;
+    char* words[20005];
+    int wordsNum = 0;
+    for (int i = 0; i < size; ++i) {
+        char ch = data[i];
+        if (isalpha(ch)) {
+            buffer.push_back((char)tolower(ch));
+        } else if (! isalpha(ch) && ! buffer.empty()) {
+            int len = (int)buffer.size();
+            words[wordsNum] = (char*)malloc((len + 1) * sizeof(char));
+            for (int j = 0; j < len; ++j) {
+                words[wordsNum][j] = buffer[j];
+            }
+            words[wordsNum][len] = '\0';
+            wordsNum++;
+            buffer.clear();
+        }
+    }
+
+    // 调用Core函数
+    char **result;
+    int resultLen = 0;
+    try {
+        if (taskType == N_TASK) {
+            resultLen = gen_chains_all(words, wordsNum, result);
+        } else if (taskType == W_TASK) {
+            resultLen = gen_chain_word(words, wordsNum, result, hOption, tOption, jOption, rOption);
+        } else if (taskType == C_TASK) {
+            resultLen = gen_chain_char(words, wordsNum, result, hOption, tOption, jOption, rOption);
+        }
+    } catch (std::exception &e) {
+        QMessageBox::critical(this, "出错啦!", "输入文本中隐含环");
+        return;
+    }
+
+    // 如果没有找到结果, 则弹出错误提示
+    if (resultLen <= 0) {
+        QMessageBox::critical(this, "出错啦!", "没有找到任何结果");
+        return;
+    }
+
+    // 如果找到了结果, 则将结果输出到输出框
+    ui->outputBox->clear();
+    if (taskType == N_TASK) {
+        ui->outputBox->append(QString::fromStdString(std::to_string(resultLen) + "\n"));
+    }
+    for (int i = 0; i < resultLen; ++i) {
+        ui->outputBox->append(QString::fromStdString(result[i]) + "\n");
+    }
+
+    // 当前输出了结果，所以设置导出按钮为可用状态
+    ui->exportButton->setEnabled(true);
+
+    // 将data对应的内存释放
+    free(data);
 }
 
 Widget::~Widget()
