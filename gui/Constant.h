@@ -8,4 +8,6 @@
 #define FILE_INPUT_MODE 0
 #define SCREEN_INPUT_MODE 1
 
+#define MAX_WORD_LENGTH 20005
+
 #endif // CONSTANT_H

@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QComboBox>
 #include <QTextCodec>
+#include <QTextEdit>
 #include <QMessageBox>
 #include <QErrorMessage>
 #include <cstring>

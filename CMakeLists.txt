@@ -7,3 +7,4 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/)
 
 add_subdirectory ("src")
 add_subdirectory ("core")
+add_subdirectory ("gui")

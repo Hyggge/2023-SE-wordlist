@@ -156,7 +156,7 @@ void Widget::work() {
     }
 
     // 调用Core函数
-    char **result;
+    char *result[MAX_WORD_LENGTH] = {nullptr};
     int resultLen = 0;
     try {
         if (taskType == N_TASK) {
@@ -180,17 +180,24 @@ void Widget::work() {
     // 如果找到了结果, 则将结果输出到输出框
     ui->outputBox->clear();
     if (taskType == N_TASK) {
-        ui->outputBox->append(QString::fromStdString(std::to_string(resultLen) + "\n"));
+        ui->outputBox->append(QString::fromStdString(std::to_string(resultLen)));
     }
     for (int i = 0; i < resultLen; ++i) {
-        ui->outputBox->append(QString::fromStdString(result[i]) + "\n");
+        ui->outputBox->append(QString::fromStdString(result[i]));
     }
 
     // 当前输出了结果，所以设置导出按钮为可用状态
     ui->exportButton->setEnabled(true);
 
-    // 将data对应的内存释放
+    // 内存释放
     free(data);
+    for(int i = 0; i < wordsNum; ++i) {
+        free(words[i]);
+    }
+    for (int i = 0; i < resultLen; ++i) {
+        free(result[i]);
+    }
+
 }
 
 Widget::~Widget()
