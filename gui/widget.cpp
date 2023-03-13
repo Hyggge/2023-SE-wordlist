@@ -84,9 +84,9 @@ Widget::Widget(QWidget *parent)
     // 绑定rOptionInput的选择事件
     connect(ui->rOptionSelect, &QComboBox::currentTextChanged, this, [&](QString text) {
         if (ui->rOptionSelect->currentIndex() == 0) {
-            rOption = true;
-        } else {
             rOption = false;
+        } else {
+            rOption = true;
         }
         // qDebug() << rOption;
     });

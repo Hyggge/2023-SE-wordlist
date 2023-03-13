@@ -321,12 +321,12 @@
     </property>
     <item>
      <property name="text">
-      <string>是</string>
+      <string>否</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>否</string>
+      <string>是</string>
      </property>
     </item>
    </widget>
