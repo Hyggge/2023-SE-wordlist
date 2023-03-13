@@ -6,7 +6,7 @@ include_directories(../gtest/googletest/include)
 include_directories(../gtest/googlemock/include)
 include_directories(include)
 
-add_executable(UnitTest main.cpp)
+add_executable(UnitTest main.cpp genChainsAllTest.cpp genChainWordTest.cpp genChainCharTest.cpp include/test.h)
 
 target_link_libraries(UnitTest gtest gtest_main)
 target_link_libraries(UnitTest gmock gmock_main)
