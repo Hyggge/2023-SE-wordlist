@@ -63,6 +63,9 @@ bool Graph::hasCircle() {
 
 void Graph::dfsChainsAll(int cur, bool allowSelfCircle) {
     if (wordIdStack.size() >= 2) {
+        if (resultLen >= 20000) {
+            throw std::logic_error("Length of result exceeds the upper limit(20000)");
+        }
         std::vector<char> buffer;
         for (int id : wordIdStack) {
             char* word = words[id];
@@ -102,6 +105,9 @@ int Graph::genChainsAll() {
 
 void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited) {
     if ((tail == '\0' || tail == cur) && curChain.size() > maxChain.size()) {
+        if (curChain.size() > 20000) {
+            throw std::logic_error("Length of result exceeds the upper limit(20000)");
+        }
         maxChain = std::vector<int>(curChain);
     }
     for (Edge& edge : g[cur]) {
@@ -176,6 +182,12 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
         }
 
     }
+
+    // ensure that the length of result is less than 20000
+    if (maxWordNum > 20000) {
+        throw std::logic_error("Length of result exceeds the upper limit(20000)");
+    }
+
     // find the specific longest word chain with `maxPos` and `pre`
     int cur = maxPos;
     for (int i = maxWordNum - 1; i >= 0; --i) {
@@ -198,6 +210,9 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
 
 void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum) {
     if ((tail == '\0' || tail == cur) && curCharNum > maxCharNum) {
+        if (curChain.size() > 20000) {
+            throw std::logic_error("Length of result exceeds the upper limit(20000)");
+        }
         maxChain = std::vector<int>(curChain);
         maxCharNum = curCharNum;
     }
@@ -278,9 +293,16 @@ int Graph::genChainCharWithoutCircle(char head, char tail) {
             }
         }
     }
+
+    resultLen = wordNum[maxPos];
+
+    // ensure that the length of result is less than 20000
+    if (resultLen > 20000) {
+        throw std::logic_error("Length of result exceeds the upper limit(20000)");
+    }
+
     // find the specific longest word chain with `maxPos` and `pre`
     int cur = maxPos;
-    resultLen = wordNum[maxPos];
     for (int i = resultLen - 1; i >= 0; --i) {
         if (! selfCircleWordIdList[cur].empty()) {
             int wordId = selfCircleWordIdList[cur][0];
