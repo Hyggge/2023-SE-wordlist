@@ -199,6 +199,7 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
 void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum) {
     if ((tail == '\0' || tail == cur) && curCharNum > maxCharNum) {
         maxChain = std::vector<int>(curChain);
+        maxCharNum = curCharNum;
     }
     for (Edge& edge : g[cur]) {
         if (! visited[edge.wordId]) {
