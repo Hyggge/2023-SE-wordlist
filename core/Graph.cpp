@@ -1,5 +1,7 @@
 #include "Graph.h"
-#include "cstdlib"
+#include <stdexcept>
+#include <cstdlib>
+#include <cctype>
 #include <cstring>
 #include <queue>
 #include <vector>
@@ -15,6 +17,12 @@ Graph::Graph(char* words[], int len, char* result[], char except) {
             continue;
         }
         word2Len[i] = (int)strlen(words[i]);
+        for (int k = 0; k < word2Len[i]; ++k) {
+            if (!islower(words[i][k])) {
+                throw std::invalid_argument("Word must be lower case in core");
+            }
+        }
+
         int from = words[i][0] - 'a';
         int to = words[i][word2Len[i] - 1] - 'a';
         if (from == to) {
