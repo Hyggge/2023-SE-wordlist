@@ -198,8 +198,6 @@ TEST(genChainWord, genChainWordTest7) {
     }
 }
 
-
-
 TEST(genChainWord, genChainWordTest8) {
     char* words[] = {
             "element",
@@ -225,8 +223,29 @@ TEST(genChainWord, genChainWordTest8) {
     for (int i = 0; i < expectedLen; ++i) {
         ASSERT_STREQ(result[i], expected[i]);
     }
+}
 
-
-
-
+TEST(genChainWord, genChainWordTest9) {
+    char* words[] = {
+            "element",
+            "heaven",
+            "tot",
+            "tight",
+            "new",
+            "teach",
+            "talk",
+            "knight",
+            "tough",
+            "not"
+    };
+    int wordsLen = sizeof(words) / sizeof(words[0]);
+    char* result[100];
+    try {
+        gen_chain_word(words, wordsLen, result, '\0', '\0', '\0', false);
+        FAIL();
+    } catch (const std::logic_error& e) {
+        ASSERT_STREQ(e.what(), "Circle detected, please add -r to support circle");
+    } catch (...) {
+        FAIL();
+    }
 }

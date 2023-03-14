@@ -57,3 +57,45 @@ TEST(genChainsAll, genChainsAllTest2) {
         ASSERT_STREQ(result[i], expected[i]);
     }
 }
+
+TEST(genChainsAll, genChainsAllTest3) {
+    char* words[] = {"ab", "bc", "ca"};
+    int len = sizeof(words) / sizeof(words[0]);
+    char* result[100];
+    try {
+        gen_chains_all(words, len, result);
+        FAIL();
+    } catch (std::logic_error& e) {
+        ASSERT_STREQ(e.what(), "Circle detected");
+    } catch (...) {
+        FAIL();
+    }
+}
+
+TEST(genChainsAll, genChainsAllTest4) {
+    char* words[] = {"wa", "aba", "aca"};
+    int len = sizeof(words) / sizeof(words[0]);
+    char* result[100];
+    try {
+        gen_chains_all(words, len, result);
+        FAIL();
+    } catch (std::logic_error& e) {
+        ASSERT_STREQ(e.what(), "Circle detected");
+    } catch (...) {
+        FAIL();
+    }
+}
+
+TEST(genChainsAll, genChainsAllTest5) {
+    char* words[] = {"wA", "aBa"};
+    int len = sizeof(words) / sizeof(words[0]);
+    char* result[100];
+    try {
+        gen_chains_all(words, len, result);
+        FAIL();
+    } catch (std::invalid_argument& e) {
+        ASSERT_STREQ(e.what(), "Word must be lower case in core");
+    } catch (...) {
+        FAIL();
+    }
+}

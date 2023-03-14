@@ -229,3 +229,24 @@ TEST(genChainChar, genChainCharTest10) {
         ASSERT_STREQ(result[i], expected[i]);
     }
 }
+
+TEST(genChainChar, genChainCharTest11) {
+    char* words[] = {
+            "element",
+            "heaven",
+            "tot",
+            "tight",
+            "teach",
+            "talk"
+    };
+    int wordsLen = sizeof(words) / sizeof(words[0]);
+    char* result[100];
+    try {
+        gen_chain_char(words, wordsLen, result, '\0', '\0', '\0', false);
+        FAIL();
+    } catch (const std::logic_error& e) {
+        ASSERT_STREQ(e.what(), "Circle detected, please add -r to support circle");
+    } catch (...) {
+        FAIL();
+    }
+}
