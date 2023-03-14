@@ -3,6 +3,12 @@
 #include <stdexcept>
 
 int gen_chains_all(char* words[], int len, char* result[]) {
+    // check the validity of parameters
+    if (words == nullptr) throw std::invalid_argument("Value of words can't be null");
+    if (len < 0) throw std::invalid_argument("Value of len can't be less than 0");
+    if (result == nullptr) throw std::invalid_argument("Value of result can't be null");
+
+    // build graph and calculate
     Graph graph(words, len, result);
     if (graph.hasCircle()) {
         throw std::logic_error("Circle detected");
@@ -11,6 +17,15 @@ int gen_chains_all(char* words[], int len, char* result[]) {
 }
 
 int gen_chain_word(char* words[], int len, char* result[], char head, char tail, char except, bool enable_loop) {
+    // check the validity of parameters
+    if (words == nullptr) throw std::invalid_argument("Value of words can't be null");
+    if (len < 0) throw std::invalid_argument("Value of len can't be less than 0");
+    if (result == nullptr) throw std::invalid_argument("Value of result can't be null");
+    if (head != '\0' && ! isalpha(head)) throw std::invalid_argument("Value of head must be a letter");
+    if (tail != '\0' && ! isalpha(tail)) throw std::invalid_argument("Value of tail must be a letter");
+    if (except != '\0' && ! isalpha(except)) throw std::invalid_argument("Value of except must be a letter");
+
+    // build graph and calculate
     Graph graph(words, len, result, except);
     if (graph.hasCircle()) {
         if (!enable_loop) {
@@ -23,6 +38,15 @@ int gen_chain_word(char* words[], int len, char* result[], char head, char tail,
 }
 
 int gen_chain_char(char* words[], int len, char* result[], char head, char tail, char except, bool enable_loop) {
+    // check the validity of parameters
+    if (words == nullptr) throw std::invalid_argument("Value of words can't be null");
+    if (len < 0) throw std::invalid_argument("Value of len can't be less than 0");
+    if (result == nullptr) throw std::invalid_argument("Value of result can't be null");
+    if (head != '\0' && ! isalpha(head)) throw std::invalid_argument("Value of head must be a letter");
+    if (tail != '\0' && ! isalpha(tail)) throw std::invalid_argument("Value of tail must be a letter");
+    if (except != '\0' && ! isalpha(except)) throw std::invalid_argument("Value of except must be a letter");
+
+    // build graph and calculate
     Graph graph(words, len, result, except);
     if (graph.hasCircle()) {
         if (!enable_loop) {
