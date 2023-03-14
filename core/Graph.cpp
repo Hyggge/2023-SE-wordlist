@@ -110,6 +110,15 @@ void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChai
         }
         maxChain = std::vector<int>(curChain);
     }
+    for (int id : selfCircleWordIdList[cur]) {
+        if (! visited[id]) {
+            visited[id] = true;
+            curChain.push_back(id);
+            dfsChainWordWithCircle(cur, tail, curChain, maxChain, visited);
+            curChain.pop_back();
+            visited[id] = false;
+        }
+    }
     for (Edge& edge : g[cur]) {
         if (! visited[edge.wordId]) {
             visited[edge.wordId] = true;
@@ -215,6 +224,15 @@ void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain
         }
         maxChain = std::vector<int>(curChain);
         maxCharNum = curCharNum;
+    }
+    for (int id : selfCircleWordIdList[cur]) {
+        if (! visited[id]) {
+            visited[id] = true;
+            curChain.push_back(id);
+            dfsChainCharWithCircle(cur, tail, curChain, maxChain, visited, curCharNum + word2Len[id], maxCharNum);
+            curChain.pop_back();
+            visited[id] = false;
+        }
     }
     for (Edge& edge : g[cur]) {
         if (! visited[edge.wordId]) {
