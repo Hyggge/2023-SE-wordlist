@@ -193,7 +193,13 @@ void Widget::work() {
         }
         endTime = clock();
     } catch (std::exception &e) {
-        QMessageBox::critical(this, "出错啦!", "输入文本中隐含环");
+        if (strcmp(e.what(), "Circle detected") == 0) {
+            QMessageBox::critical(this, "出错啦!", "输入文本中隐含环");
+        } else if (strcmp(e.what(), "Length of result exceeds the upper limit(20000)") == 0) {
+            QMessageBox::critical(this, "出错啦!", "计算结果数量大于上限(20000)");
+        } else {
+            QMessageBox::critical(this, "出错啦!", e.what());
+        }
         return;
     }
 
