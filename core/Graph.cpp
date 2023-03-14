@@ -310,6 +310,7 @@ int Graph::genChainCharWithoutCircle(char head, char tail) {
             strcpy(result[i], words[wordId]);
             --i;
         }
+        if (i < 0) break;
         int wordId = pre[cur].second;
         result[i] = (char *) malloc((word2Len[wordId] + 1) * sizeof(char));
         strcpy(result[i], words[wordId]);
