@@ -16,4 +16,6 @@ include_directories(../core/include)
 add_executable(UnitTest main.cpp genChainsAllTest.cpp genChainWordTest.cpp genChainCharTest.cpp include/test.h ../core/Core.cpp ../core/Graph.cpp)
 target_link_libraries(UnitTest gtest gtest_main)
 target_link_libraries(UnitTest gmock gmock_main)
-SET_TARGET_PROPERTIES(UnitTest PROPERTIES LINK_FLAGS "/PROFILE")
+# (UnitTest PROPERTIES LINK_FLAGS "/PROFILE")
+
+add_compile_options(-fprofile-arcs -ftest-coverage)
