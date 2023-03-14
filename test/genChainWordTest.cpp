@@ -14,7 +14,7 @@ TEST(genChainWord, genChainWordTest1) {
             "trick",
             "pseudopseudohypoparathyroidism"
     };
-    char* expected[] = {
+    const char* expected[] = {
             "algebra",
             "apple",
             "elephant",
@@ -26,10 +26,6 @@ TEST(genChainWord, genChainWordTest1) {
     char* result[100];
     int resultLen = gen_chain_word(words, wordsLen, result, '\0', '\0', '\0', false);
     ASSERT_EQ(resultLen, expectedLen);
-
-    std::sort(expected, expected + resultLen, my_cmp);
-    std::sort(result, result + resultLen, my_cmp);
-
     for (int i = 0; i < expectedLen; ++i) {
         ASSERT_STREQ(result[i], expected[i]);
     }
@@ -49,7 +45,7 @@ TEST(genChainWord, genChainWordTest2) {
                      "trick",
                      "pseudopseudohypoparathyroidism"
     };
-    char* expected[] = {
+    const char* expected[] = {
             "elephant",
             "trick"
     };
@@ -58,10 +54,6 @@ TEST(genChainWord, genChainWordTest2) {
     char* result[100];
     int resultLen = gen_chain_word(words, wordsLen, result, 'e', '\0', '\0', false);
     ASSERT_EQ(resultLen, expectedLen);
-
-    std::sort(expected, expected + resultLen, my_cmp);
-    std::sort(result, result + resultLen, my_cmp);
-
     for (int i = 0; i < expectedLen; ++i) {
         ASSERT_STREQ(result[i], expected[i]);
     }
@@ -80,7 +72,7 @@ TEST(genChainWord, genChainWordTest3) {
                      "trick",
                      "pseudopseudohypoparathyroidism"
     };
-    char* expected[] = {
+    const char* expected[] = {
             "algebra",
             "apple" ,
             "elephant",
@@ -90,17 +82,9 @@ TEST(genChainWord, genChainWordTest3) {
     char* result[100];
     int resultLen = gen_chain_word(words, wordsLen, result, '\0', 't', '\0', false);
     ASSERT_EQ(resultLen, expectedLen);
-
-    std::sort(expected, expected + resultLen, my_cmp);
-    std::sort(result, result + resultLen, my_cmp);
-
     for (int i = 0; i < expectedLen; ++i) {
         ASSERT_STREQ(result[i], expected[i]);
     }
-
-
-
-
 }
 
 TEST(genChainWord, genChainWordTest4) {
@@ -116,7 +100,7 @@ TEST(genChainWord, genChainWordTest4) {
                      "trick",
                      "pseudopseudohypoparathyroidism"
     };
-    char* expected[] = {
+    const char* expected[] = {
             "elephant",
             "trick"
     };
@@ -125,10 +109,6 @@ TEST(genChainWord, genChainWordTest4) {
     char* result[100];
     int resultLen = gen_chain_word(words, wordsLen, result, '\0', '\0', 'a', false);
     ASSERT_EQ(resultLen, expectedLen);
-
-    std::sort(expected, expected + resultLen, my_cmp);
-    std::sort(result, result + resultLen, my_cmp);
-
     for (int i = 0; i < expectedLen; ++i) {
         ASSERT_STREQ(result[i], expected[i]);
     }
@@ -142,7 +122,7 @@ TEST(genChainWord, genChainWordTest5) {
              "teach",
              "talk"
     };
-    char* expected[] = {
+    const char* expected[] = {
             "table",
             "element",
             "teach",
@@ -153,10 +133,6 @@ TEST(genChainWord, genChainWordTest5) {
     char* result[100];
     int resultLen = gen_chain_word(words, wordsLen, result, '\0', '\0', '\0', true);
     ASSERT_EQ(resultLen, expectedLen);
-
-    std::sort(expected, expected + resultLen, my_cmp);
-    std::sort(result, result + resultLen, my_cmp);
-
     for (int i = 0; i < expectedLen; ++i) {
         ASSERT_STREQ(result[i], expected[i]);
     }
