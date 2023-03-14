@@ -137,3 +137,96 @@ TEST(genChainWord, genChainWordTest5) {
         ASSERT_STREQ(result[i], expected[i]);
     }
 }
+
+TEST(genChainWord, genChainWordTest6) {
+    char* words[] = {
+            "element",
+            "heaven",
+            "tot",
+            "tight",
+            "teach",
+            "talk"
+    };
+    const char* expected[] = {
+            "tot",
+            "tight",
+            "teach",
+            "heaven",
+    };
+    int wordsLen = sizeof(words) / sizeof(words[0]);
+    int expectedLen = sizeof(expected) / sizeof(expected[0]);
+    char* result[100];
+    int resultLen = gen_chain_word(words, wordsLen, result, 't', '\0', '\0', true);
+    ASSERT_EQ(resultLen, expectedLen);
+    for (int i = 0; i < expectedLen; ++i) {
+        ASSERT_STREQ(result[i], expected[i]);
+    }
+}
+
+TEST(genChainWord, genChainWordTest7) {
+    char* words[] = {
+            "element",
+            "heaven",
+            "tot",
+            "tight",
+            "new",
+            "teach",
+            "talk",
+            "knight",
+            "tough",
+            "not"
+    };
+    // answer:  element tot tight talk knight teach heaven new
+    // longest: element tot tight talk knight teach heaven not tough
+    const char* expected[] = {
+            "element",
+            "tot",
+            "tight",
+            "talk",
+            "knight",
+            "teach",
+            "heaven",
+            "new"
+    };
+    int wordsLen = sizeof(words) / sizeof(words[0]);
+    int expectedLen = sizeof(expected) / sizeof(expected[0]);
+    char* result[100];
+    int resultLen = gen_chain_word(words, wordsLen, result, '\0', 'w', '\0', true);
+    ASSERT_EQ(resultLen, expectedLen);
+    for (int i = 0; i < expectedLen; ++i) {
+        ASSERT_STREQ(result[i], expected[i]);
+    }
+}
+
+
+
+TEST(genChainWord, genChainWordTest8) {
+    char* words[] = {
+            "element",
+            "heaven",
+            "tot",
+            "tight",
+            "new",
+            "teach",
+            "talk",
+            "knight",
+            "tough",
+            "not"
+    };
+    const char* expected[] = {
+            "heaven",
+            "new"
+    };
+    int wordsLen = sizeof(words) / sizeof(words[0]);
+    int expectedLen = sizeof(expected) / sizeof(expected[0]);
+    char* result[100];
+    int resultLen = gen_chain_word(words, wordsLen, result, '\0', '\0', 't', true);
+    ASSERT_EQ(resultLen, expectedLen);
+    for (int i = 0; i < expectedLen; ++i) {
+        ASSERT_STREQ(result[i], expected[i]);
+    }
+
+
+
+
+}
