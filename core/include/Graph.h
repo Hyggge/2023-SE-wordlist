@@ -22,8 +22,11 @@ private:
     std::vector<int> wordIdStack;
     std::vector<int> selfCircleWordIdList[26];
 
+    bool hasCircleFlag = false;
 
     void addEdge(int u, int v, int wordId);
+
+    void toposort();
 
     void dfsChainsAll(int cur, bool allowSelfCircle);
 

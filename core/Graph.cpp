@@ -33,12 +33,16 @@ Graph::Graph(char* words[], int len, char* result[], char except) {
     }
     this->words = words;
     this->result = result;
+
+    // toposort and check circle
+    toposort();
 }
 
-bool Graph::hasCircle() {
+void Graph::toposort() {
     for (int i = 0; i < 26; ++i) {
         if (selfCircleWordIdList[i].size() > 1) {
-            return true;
+            hasCircleFlag = true;
+            return;
         }
     }
     // toposort
@@ -58,7 +62,11 @@ bool Graph::hasCircle() {
             }
         }
     }
-    return cur < 26;
+    hasCircleFlag = cur < 26;
+}
+
+bool Graph::hasCircle() {
+    return hasCircleFlag;
 }
 
 void Graph::dfsChainsAll(int cur, bool allowSelfCircle) {
