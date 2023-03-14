@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "Graph.h"
 #include <stdexcept>
+#include <cctype>
 
 int gen_chains_all(char* words[], int len, char* result[]) {
     // check the validity of parameters
