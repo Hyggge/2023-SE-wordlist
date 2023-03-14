@@ -56,28 +56,40 @@ Widget::Widget(QWidget *parent)
     });
     // 绑定hOptionInput的输入事件
     connect(ui->hOptionInput, &QLineEdit::textChanged, this, [&](QString text) {
-        if (text.isEmpty() || text.toStdString().c_str()[0] == ' ') {
+        char ch = text.toStdString().c_str()[0];
+        if (text.isEmpty() || ch == ' ') {
             hOption = '\0';
+        } else if (isalpha(ch)) {
+            hOption = (char) tolower(ch);
         } else {
-            hOption = text.toStdString().c_str()[0];
+            QMessageBox::critical(this, "出错啦!", "不能输入非字母字符");
+            ui->hOptionInput->clear();
         }
         // qDebug() << hOption;
     });
     // 绑定tOptionInput的输入事件
     connect(ui->tOptionInput, &QLineEdit::textChanged, this, [&](QString text) {
-        if (text.isEmpty() || text.toStdString().c_str()[0] == ' ') {
+        char ch = text.toStdString().c_str()[0];
+        if (text.isEmpty() || ch == ' ') {
             tOption = '\0';
+        } else if (isalpha(ch)) {
+            tOption = (char) tolower(ch);
         } else {
-            tOption = text.toStdString().c_str()[0];
+            QMessageBox::critical(this, "出错啦!", "不能输入非字母字符");
+            ui->tOptionInput->clear();
         }
         // qDebug() << tOption;
     });
     // 绑定jOptionInput的输入事件
     connect(ui->jOptionInput, &QLineEdit::textChanged, this, [&](QString text) {
-        if (text.isEmpty() || text.toStdString().c_str()[0] == ' ') {
+        char ch = text.toStdString().c_str()[0];
+        if (text.isEmpty() || ch == ' ') {
             jOption = '\0';
+        } else if (isalpha(ch)) {
+            jOption = (char) tolower(ch);
         } else {
-            jOption = text.toStdString().c_str()[0];
+            QMessageBox::critical(this, "出错啦!", "不能输入非字母字符");
+            ui->jOptionInput->clear();
         }
         // qDebug() << jOption;
     });
