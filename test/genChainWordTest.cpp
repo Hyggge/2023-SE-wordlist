@@ -244,7 +244,7 @@ TEST(genChainWord, genChainWordTest9) {
         gen_chain_word(words, wordsLen, result, '\0', '\0', '\0', false);
         FAIL();
     } catch (const std::logic_error& e) {
-        ASSERT_STREQ(e.what(), "Circle detected, please add -r to support circle");
+        ASSERT_STREQ(e.what(), "Circle detected");
     } catch (...) {
         FAIL();
     }

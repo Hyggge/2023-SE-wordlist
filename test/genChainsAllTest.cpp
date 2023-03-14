@@ -99,3 +99,21 @@ TEST(genChainsAll, genChainsAllTest5) {
         FAIL();
     }
 }
+
+TEST(genChainsAll, genChainsAllTest6) {
+    char* words[] = {
+            "aa", "ab", "bb", "bc", "cc", "cd", "dd", "de", "ee", "ef",
+            "ff", "fg", "gg", "gh", "hh", "hi", "ii", "ij", "jj", "jk",
+            "kk", "kl", "ll", "lm",
+    };
+    int len = sizeof(words) / sizeof(words[0]);
+    char* result[20010];
+    try {
+        gen_chains_all(words, len, result);
+        FAIL();
+    } catch (std::logic_error& e) {
+        ASSERT_STREQ(e.what(), "Length of result exceeds the upper limit(20000)");
+    } catch (...) {
+        FAIL();
+    }
+}
