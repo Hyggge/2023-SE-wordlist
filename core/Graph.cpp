@@ -104,7 +104,7 @@ int Graph::genChainsAll() {
 }
 
 void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited) {
-    if ((tail == '\0' || tail == cur) && curChain.size() > maxChain.size()) {
+    if ((tail == '\0' || tail - 'a' == cur) && curChain.size() > maxChain.size()) {
         if (curChain.size() > 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
@@ -218,7 +218,7 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
 }
 
 void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum) {
-    if ((tail == '\0' || tail == cur) && curCharNum > maxCharNum) {
+    if ((tail == '\0' || tail - 'a' == cur) && curCharNum > maxCharNum) {
         if (curChain.size() > 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
