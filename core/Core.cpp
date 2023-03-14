@@ -27,7 +27,9 @@ int gen_chain_word(char* words[], int len, char* result[], char head, char tail,
 
     // build graph and calculate
     Graph graph(words, len, result, except);
-    if (graph.hasCircle()) {
+    Graph* graphWithAllWords = (except == '\0') ? &graph : new Graph(words, len, result);
+
+    if (graphWithAllWords->hasCircle()) {
         if (!enable_loop) {
             throw std::logic_error("Circle detected");
         }
@@ -48,7 +50,9 @@ int gen_chain_char(char* words[], int len, char* result[], char head, char tail,
 
     // build graph and calculate
     Graph graph(words, len, result, except);
-    if (graph.hasCircle()) {
+    Graph* graphWithAllWords = (except == '\0') ? &graph : new Graph(words, len, result);
+
+    if (graphWithAllWords->hasCircle()) {
         if (!enable_loop) {
             throw std::logic_error("Circle detected");
         }
