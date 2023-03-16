@@ -1,7 +1,7 @@
 #ifndef WORDLIST_TEST_H
 #define WORDLIST_TEST_H
 
-#include <Algorithm>
+#include <algorithm>
 #include "gtest/gtest.h"
 #include "Core.h"
 

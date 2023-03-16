@@ -125,6 +125,7 @@ void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChai
             dfsChainWordWithCircle(cur, tail, curChain, maxChain, visited);
             curChain.pop_back();
             visited[id] = false;
+            return;
         }
     }
     for (Edge& edge : g[cur]) {
@@ -240,6 +241,7 @@ void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain
             dfsChainCharWithCircle(cur, tail, curChain, maxChain, visited, curCharNum + word2Len[id], maxCharNum);
             curChain.pop_back();
             visited[id] = false;
+            return;
         }
     }
     for (Edge& edge : g[cur]) {

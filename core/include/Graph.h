@@ -32,7 +32,7 @@ private:
 
     void dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited);
 
-    void dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum);
+    void dfsChainCharWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum);
 
 public:
     Graph(char* words[], int len, char* result[], char except = '\0');
