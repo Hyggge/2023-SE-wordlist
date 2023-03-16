@@ -34,3 +34,7 @@ gtest
 input.txt
 solution.txt
 cmake-build-*
+
+# VS files
+*.ilk
+*.pdb
