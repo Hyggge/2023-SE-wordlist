@@ -10,9 +10,9 @@ Controller::Controller(UserOptions userOptions, char* words[], int len) {
 }
 
 Controller::~Controller() {
-    for (char* &word : this->result) {
-        free(word);
-    }
+//    for (char* &word : this->result) {
+//        free(word);
+//    }
 }
 
 void Controller::run() {
@@ -26,6 +26,11 @@ void Controller::run() {
 
     // call Core API
     int resultLen = 0;
+    static char field[10000][20000];
+    for (int i = 0; i < 10000; ++i) {
+        this->result[i] = field[i];
+    }
+
     if (userOptions.n) {
         resultLen = gen_chains_all(words, len, result);
     } else if (userOptions.w) {

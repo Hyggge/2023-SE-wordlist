@@ -178,7 +178,12 @@ void Widget::work() {
     }
 
     // 调用Core函数
-    char *result[MAX_WORD_LENGTH] = {nullptr};
+    static char field[10000][20000];
+    char *result[10000] = {nullptr};
+    for (int i = 0; i < 10000; ++i) {
+        result[i] = field[i];
+    }
+
     int resultLen = 0;
     clock_t startTime, endTime;
     char totTime[10];
@@ -231,9 +236,9 @@ void Widget::work() {
     for(int i = 0; i < wordsNum; ++i) {
         free(words[i]);
     }
-    for (int i = 0; i < resultLen; ++i) {
-        free(result[i]);
-    }
+//    for (int i = 0; i < resultLen; ++i) {
+//        free(result[i]);
+//    }
 
 }
 

@@ -10,7 +10,7 @@ private:
     UserOptions userOptions;
     char** words;
     int len;
-    char* result[WORDS_MAX_NUM] = {nullptr};
+    char* result[10000] = {nullptr};
 
 public:
     Controller(UserOptions userOptions, char* words[], int len);

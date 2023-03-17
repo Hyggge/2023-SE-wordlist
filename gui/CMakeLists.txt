@@ -31,5 +31,6 @@ else()
 endif()
 include_directories(include)
 #target_link_directories(GUI PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(GUI PRIVATE Qt5::Widgets core)
+target_link_directories(GUI PUBLIC ../bin)
+target_link_libraries(GUI PRIVATE Qt5::Widgets coreDll)
 
