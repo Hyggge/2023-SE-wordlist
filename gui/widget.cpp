@@ -107,13 +107,13 @@ Widget::Widget(QWidget *parent)
     // 绑定exportButton的点击事件
     connect(ui->exportButton, &QPushButton::clicked, this, [&]() {
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "solution", tr("Text Files (*.txt)"));
-        QTextCodec *code = QTextCodec::codecForName("UTF-8");
+        QTextCodec *code = QTextCodec::codecForName("GB2312");
         fileName = QString::fromStdString(code->fromUnicode(fileName).data());
         if (fileName != nullptr) {
             // qDebug() << fileName.toStdString().c_str();
             FILE* file = fopen(fileName.toStdString().c_str(), "w");
             if (file == nullptr) {
-                QMessageBox::critical(this, "出错啦!", "指定路径的文件无法打开");
+                QMessageBox::critical(this, "出错啦!", "指定路径的文件无法打开（注意路径中不要有中文）");
             } else {
                 fputs(ui->outputBox->toPlainText().toStdString().c_str(), file);
             }
