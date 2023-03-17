@@ -27,6 +27,7 @@ else()
     include/Core.h
     include/Constant.h
     widget.ui
+    icon.rc
   )
 endif()
 include_directories(include)
