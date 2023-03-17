@@ -12,6 +12,8 @@ private:
     std::vector<Edge> g[26];
     int toposortInDegree[26] = {0};
     int toposortSequence[26] = {0};
+    int inDegree[26] = {0};
+    int outDegree[26] = {0};
 
     char** words;
     int word2Len[10005];

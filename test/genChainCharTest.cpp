@@ -271,3 +271,26 @@ TEST(genChainChar, genChainCharTest12) {
         FAIL();
     }
 }
+
+TEST(genChainChar, genChainCharTest13) {
+    char* words[] = {
+            "ab", "ba",
+            "ac", "ca", "bc", "cb",
+            "ad", "da", "bd", "db", "cd", "dc",
+            "aa", "bb", "cc", "dd",
+    };
+    const char* expected[] = {
+            "aa", "ab", "bb", "ba",
+            "ac", "cc", "ca", "ad",
+            "dd", "db", "bc", "cb",
+            "bd", "dc", "cd", "da",
+    };
+    int wordsLen = sizeof(words) / sizeof(words[0]);
+    int expectedLen = sizeof(expected) / sizeof(expected[0]);
+    char* result[100];
+    int resultLen = gen_chain_char(words, wordsLen, result, '\0', '\0', '\0', true);
+    ASSERT_EQ(resultLen, expectedLen);
+    for (int i = 0; i < expectedLen; ++i) {
+        ASSERT_STREQ(result[i], expected[i]);
+    }
+}

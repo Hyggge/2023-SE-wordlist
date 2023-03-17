@@ -10,6 +10,8 @@
 void Graph::addEdge(int u, int v, int wordId) {
     g[u].push_back({wordId, v});
     ++toposortInDegree[v];
+    ++inDegree[v];
+    ++outDegree[u];
 }
 
 Graph::Graph(char* words[], int len, char* result[], char except) {
@@ -117,7 +119,8 @@ int Graph::genChainsAll() {
 }
 
 void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited) {
-    if ((tail == '\0' || tail - 'a' == cur) && curChain.size() > maxChain.size()) {
+    // 如果 tail == '\0'，那么必须入度 >= 出度，否则链一定可以延伸到下个结点
+    if (((tail == '\0' && inDegree[cur] >= outDegree[cur]) || tail - 'a' == cur) && curChain.size() > maxChain.size()) {
         if (curChain.size() > 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
@@ -153,6 +156,10 @@ int Graph::genChainWordWithCircle(char head, char tail) {
         dfsChainWordWithCircle(head - 'a', tail, curChain, maxChain, visited);
     } else {
         for (int i = 0; i < 26; ++i) {
+            // 如果 head == '\0'，那么必须入度 <= 出度，否则链一定可以延伸到上个结点
+            if (inDegree[i] > outDegree[i]) {
+                continue;
+            }
             dfsChainWordWithCircle(i, tail, curChain, maxChain, visited);
         }
     }
@@ -232,7 +239,7 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
 }
 
 void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum) {
-    if ((tail == '\0' || tail - 'a' == cur) && curCharNum > maxCharNum) {
+    if (((tail == '\0' && inDegree[cur] >= outDegree[cur]) || tail - 'a' == cur) && curCharNum > maxCharNum) {
         if (curChain.size() > 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
@@ -271,6 +278,9 @@ int Graph::genChainCharWithCircle(char head, char tail) {
         dfsChainCharWithCircle(head - 'a', tail, curChain, maxChain, visited, curCharNum, maxCharNum);
     } else {
         for (int i = 0; i < 26; ++i) {
+            if (inDegree[i] > outDegree[i]) {
+                continue;
+            }
             dfsChainCharWithCircle(i, tail, curChain, maxChain, visited, curCharNum, maxCharNum);
         }
     }
