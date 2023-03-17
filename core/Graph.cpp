@@ -5,6 +5,7 @@
 #include <cstring>
 #include <queue>
 #include <vector>
+#include <set>
 
 void Graph::addEdge(int u, int v, int wordId) {
     g[u].push_back({wordId, v});
@@ -12,10 +13,15 @@ void Graph::addEdge(int u, int v, int wordId) {
 }
 
 Graph::Graph(char* words[], int len, char* result[], char except) {
+    std::set<std::string> wordSet;
     for (int i = 0; i < len; ++i) {
         if (words[i][0] == except) {
             continue;
         }
+        if (wordSet.find(words[i]) != wordSet.end()) {
+            continue;
+        }
+        wordSet.insert(words[i]);
         word2Len[i] = (int)strlen(words[i]);
         for (int k = 0; k < word2Len[i]; ++k) {
             if (!islower(words[i][k])) {
