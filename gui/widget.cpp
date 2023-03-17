@@ -106,7 +106,7 @@ Widget::Widget(QWidget *parent)
     connect(ui->startButton, &QPushButton::clicked, this, &Widget::work);
     // 绑定exportButton的点击事件
     connect(ui->exportButton, &QPushButton::clicked, this, [&]() {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Text Files (*.txt)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "solution", tr("Text Files (*.txt)"));
         QTextCodec *code = QTextCodec::codecForName("UTF-8");
         fileName = QString::fromStdString(code->fromUnicode(fileName).data());
         if (fileName != nullptr) {
