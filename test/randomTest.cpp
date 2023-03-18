@@ -65,7 +65,7 @@ TEST(randomTest, randomTest1) {
             fout10000.close();
             std::system(R"(.\bin\WordList.exe -c -r .\words50.txt > .\my.out)");
             // std::cerr << "finished my.out" << std::endl;
-            std::system(R"(..\two-thirds-of-icpc-master\bin\WordList.exe -c -r .\words50.txt)");
+            std::system(R"(.\std.exe -c -r .\words50.txt)");
             // std::cerr << "finished std.out" << std::endl;
             // 对比 my.out 和 solution.txt 中的单词总字母数是否相同
             ifstream fin1("my.out");
@@ -82,7 +82,7 @@ TEST(randomTest, randomTest1) {
             }
             std::system(R"(.\bin\WordList.exe -c -r .\words10000.txt > .\my.out)");
             // std::cerr << "finished my.out" << std::endl;
-            std::system(R"(..\two-thirds-of-icpc-master\bin\WordList.exe -c .\words10000.txt)");
+            std::system(R"(.\std.exe -c .\words10000.txt)");
             // std::cerr << "finished std.out" << std::endl;
             // 对比 my.out 和 solution.txt 中的单词总字母数是否相同
             fin1.open("my.out");
