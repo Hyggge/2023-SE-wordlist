@@ -12,6 +12,8 @@ private:
     std::vector<Edge> g[26];
     int toposortInDegree[26] = {0};
     int toposortSequence[26] = {0};
+    int inDegree[26] = {0};
+    int outDegree[26] = {0};
 
     char** words;
     int word2Len[10005];
@@ -32,7 +34,7 @@ private:
 
     void dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited);
 
-    void dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum);
+    void dfsChainCharWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum);
 
 public:
     Graph(char* words[], int len, char* result[], char except = '\0');

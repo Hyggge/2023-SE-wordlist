@@ -37,19 +37,20 @@ void Controller::run() {
     // cannot find result
     if (resultLen <= 0) throw NoResultException();
 
-    // open file to write
-    FILE *fp = fopen("solution.txt", "w");
-    if (fp == nullptr) {
-        throw FileOpenException("solution.txt");
-    }
-
     // print result
     if (userOptions.n) {
         printf("%d\n", resultLen);
-        fprintf(fp, "%d\n", resultLen);
-    }
-    for (int i = 0; i < resultLen; i++) {
-        printf("%s\n", result[i]);
-        fprintf(fp, "%s\n", result[i]);
+        for (int i = 0; i < resultLen; i++) {
+            printf("%s\n", result[i]);
+        }
+    } else {
+        FILE *fp = fopen("solution.txt", "w");
+        if (fp == nullptr) {
+            throw FileOpenException("solution.txt");
+        }
+        for (int i = 0; i < resultLen; i++) {
+            fprintf(fp, "%s\n", result[i]);
+        }
+        fclose(fp);
     }
 }

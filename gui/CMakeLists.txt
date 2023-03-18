@@ -20,13 +20,14 @@ if(ANDROID)
     widget.ui
   )
 else()
-  add_executable(GUI
+  add_executable(GUI WIN32
     main.cpp
     widget.cpp
     include/widget.h
     include/Core.h
     include/Constant.h
     widget.ui
+    icon.rc
   )
 endif()
 include_directories(include)

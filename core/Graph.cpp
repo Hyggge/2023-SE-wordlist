@@ -5,17 +5,25 @@
 #include <cstring>
 #include <queue>
 #include <vector>
+#include <set>
 
 void Graph::addEdge(int u, int v, int wordId) {
     g[u].push_back({wordId, v});
     ++toposortInDegree[v];
+    ++inDegree[v];
+    ++outDegree[u];
 }
 
 Graph::Graph(char* words[], int len, char* result[], char except) {
+    std::set<std::string> wordSet;
     for (int i = 0; i < len; ++i) {
         if (words[i][0] == except) {
             continue;
         }
+        if (wordSet.find(words[i]) != wordSet.end()) {
+            continue;
+        }
+        wordSet.insert(words[i]);
         word2Len[i] = (int)strlen(words[i]);
         for (int k = 0; k < word2Len[i]; ++k) {
             if (!islower(words[i][k])) {
@@ -74,20 +82,19 @@ void Graph::dfsChainsAll(int cur, bool allowSelfCircle) {
         if (resultLen >= 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
-        std::vector<char> buffer;
+        int totalLen = 0;
         for (int id : wordIdStack) {
-            char* word = words[id];
-            for (int i = 0; word[i] != '\0'; ++i) {
-                buffer.push_back(word[i]);
+            totalLen += word2Len[id] + 1;
+        }
+        result[resultLen] = (char *) malloc(totalLen * sizeof(char));
+        int pos = 0;
+        for (int id : wordIdStack) {
+            for (int i = 0; i < word2Len[id]; ++i) {
+                result[resultLen][pos++] = words[id][i];
             }
-            buffer.push_back(' ');
+            result[resultLen][pos++] = ' ';
         }
-        buffer.pop_back();
-        result[resultLen] = (char *) malloc((buffer.size() + 1) * sizeof(char));
-        for (int i = 0; i < buffer.size(); ++i) {
-            result[resultLen][i] = buffer[i];
-        }
-        result[resultLen][buffer.size()] = '\0';
+        result[resultLen][totalLen - 1] = '\0';
         ++resultLen;
     }
     // self circle
@@ -112,7 +119,8 @@ int Graph::genChainsAll() {
 }
 
 void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited) {
-    if ((tail == '\0' || tail - 'a' == cur) && curChain.size() > maxChain.size()) {
+    // 如果 tail == '\0'，那么必须入度 >= 出度，否则链一定可以延伸到下个结点
+    if (((tail == '\0' && inDegree[cur] >= outDegree[cur]) || tail - 'a' == cur) && curChain.size() > maxChain.size()) {
         if (curChain.size() > 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
@@ -125,6 +133,7 @@ void Graph::dfsChainWordWithCircle(int cur, char tail, std::vector<int>& curChai
             dfsChainWordWithCircle(cur, tail, curChain, maxChain, visited);
             curChain.pop_back();
             visited[id] = false;
+            return;
         }
     }
     for (Edge& edge : g[cur]) {
@@ -147,6 +156,10 @@ int Graph::genChainWordWithCircle(char head, char tail) {
         dfsChainWordWithCircle(head - 'a', tail, curChain, maxChain, visited);
     } else {
         for (int i = 0; i < 26; ++i) {
+            // 如果 head == '\0'，那么必须入度 <= 出度，否则链一定可以延伸到上个结点
+            if (inDegree[i] > outDegree[i]) {
+                continue;
+            }
             dfsChainWordWithCircle(i, tail, curChain, maxChain, visited);
         }
     }
@@ -226,7 +239,7 @@ int Graph::genChainWordWithoutCircle(char head, char tail) {
 }
 
 void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain, std::vector<int>& maxChain, bool* visited, int curCharNum, int& maxCharNum) {
-    if ((tail == '\0' || tail - 'a' == cur) && curCharNum > maxCharNum) {
+    if (((tail == '\0' && inDegree[cur] >= outDegree[cur]) || tail - 'a' == cur) && curCharNum > maxCharNum) {
         if (curChain.size() > 20000) {
             throw std::logic_error("Length of result exceeds the upper limit(20000)");
         }
@@ -240,6 +253,7 @@ void Graph::dfsChainCharWithCircle(int cur, char tail,std::vector<int>& curChain
             dfsChainCharWithCircle(cur, tail, curChain, maxChain, visited, curCharNum + word2Len[id], maxCharNum);
             curChain.pop_back();
             visited[id] = false;
+            return;
         }
     }
     for (Edge& edge : g[cur]) {
@@ -264,6 +278,9 @@ int Graph::genChainCharWithCircle(char head, char tail) {
         dfsChainCharWithCircle(head - 'a', tail, curChain, maxChain, visited, curCharNum, maxCharNum);
     } else {
         for (int i = 0; i < 26; ++i) {
+            if (inDegree[i] > outDegree[i]) {
+                continue;
+            }
             dfsChainCharWithCircle(i, tail, curChain, maxChain, visited, curCharNum, maxCharNum);
         }
     }
